@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -292,7 +293,7 @@ public class PiccoloCipher {
     }
 
     // Test function
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         int[] idiff = new int[]{0x1, 0x1, 0x1, 0x1};
         int[] odiff = new int[]{0x6, 0x6, 0x6, 0x6};
         List<Integer> res=  recoverFromDiff(idiff, odiff);

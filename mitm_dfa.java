@@ -1,9 +1,12 @@
+import java.io.IOException;
 import java.util.*;
 
 public class mitm_dfa extends PiccoloCipher{
 
 
     //    static int[] plaintext = {0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF};
+    public static int buzhou2=0;
+    public static int buzhou3=0;
     static int[] plaintext = {14, 6, 1, 10, 9, 15, 13, 6, 6, 10, 8, 11, 8, 3, 11, 5};
     public static int[] key = {0x0011, 0x2233, 0x4455, 0x6677, 0x8899};
     static int[] ciphertext = encrypt(plaintext, key);
@@ -333,6 +336,7 @@ public class mitm_dfa extends PiccoloCipher{
     public static List<int[]> check() {
         List<int[]> res_m1= MITM();
         System.out.println("步骤 2 的候选结果数量为： "+res_m1.size());
+        buzhou2 = res_m1.size();
 //        System.out.println(res_m1.size());
 
         List<int[]> res_m2 = new ArrayList<>();
@@ -355,6 +359,7 @@ public class mitm_dfa extends PiccoloCipher{
             }
         }
         System.out.println("步骤 3 的候选结果数量为： "+res_m2.size());
+        buzhou3 = res_m2.size();
 //        System.out.println(res_m2.size());
         //wk3 a22r a22r* k4L k1R d_j_24L b24L
 
@@ -466,7 +471,7 @@ public class mitm_dfa extends PiccoloCipher{
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         int[] nums = new int[10000];
             plaintext = generateRandomArray(16, 0, 15);
 
