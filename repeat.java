@@ -6,8 +6,14 @@ import java.io.IOException;
 
 public class repeat extends mitm_dfa{
     public static void main(String[] args) throws IOException {
-        int[] time_nums = new int[100000];
         int repeat_times = 2;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("请输入实验重复次数：");
+        repeat_times = scanner.nextInt();
+
+        int[] time_nums = new int[100000];
+
+
         BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"));
         writer.write("程序运行时间（ms） | 步骤2结果数量 | 步骤3结果数量");
         writer.newLine(); // 换行
