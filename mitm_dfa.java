@@ -20,6 +20,7 @@ public class mitm_dfa extends PiccoloCipher{
     public static List<int[]> MITM(){
         int num=0;
         List<int[]> res_m1 = new ArrayList<>();
+
         // index_-- String c1c2     inside--wk3_imd34_imd12
         for (int wk_3 = 0; wk_3 <= (1<<16); wk_3++) {
             HashMap<String, List<Integer>> L_1 = new HashMap<>();
@@ -331,6 +332,7 @@ public class mitm_dfa extends PiccoloCipher{
 
     public static List<int[]> check() {
         List<int[]> res_m1= MITM();
+        System.out.println("步骤 2 的候选结果数量为： "+res_m1.size());
 //        System.out.println(res_m1.size());
 
         List<int[]> res_m2 = new ArrayList<>();
@@ -352,6 +354,7 @@ public class mitm_dfa extends PiccoloCipher{
                 res_m2.add(temp);
             }
         }
+        System.out.println("步骤 3 的候选结果数量为： "+res_m2.size());
 //        System.out.println(res_m2.size());
         //wk3 a22r a22r* k4L k1R d_j_24L b24L
 
@@ -373,6 +376,7 @@ public class mitm_dfa extends PiccoloCipher{
                 res_3.add(new int[]{wk3, wk2, k0L, k1R, a22r, a22rs});
             }
         }
+        System.out.println("步骤 4 使用单密文对的候选结果数量为：  "+res_3.size());
 //        System.out.println(res_3.size());
 
         int flag =-1;
@@ -406,7 +410,9 @@ public class mitm_dfa extends PiccoloCipher{
 //            System.out.println("BADHAPPEN!");
 //            return -1;
 //        }
+        System.out.println("步骤 5 使用单密文对的候选结果数量为：  "+res_4.size());
         return res_4;
+
 
 //        MITM_2(0x6699, 0x9E);
 
@@ -465,7 +471,7 @@ public class mitm_dfa extends PiccoloCipher{
             plaintext = generateRandomArray(16, 0, 15);
 
             Scanner scanner = new Scanner(System.in);
-            System.out.println("请输入20个十六进制数字作为密钥（每个0~F，每四位以空格分隔）：");
+            System.out.println("请输入20个十六进制数字作为密钥（每个0~F，每四位以空格分隔，如：1234 5678 9ABC DEF0 1234）：");
             String[] input = scanner.nextLine().trim().split("\\s+");
 
             if (input.length != 5) {
@@ -486,8 +492,10 @@ public class mitm_dfa extends PiccoloCipher{
                 System.out.println("输入包含非法十六进制字符，请仅输入0~F。");
                 return;
             }
+        long startTime=System.currentTimeMillis();   //获取开始时间
 
-            ciphertext = encrypt(plaintext, key);
+
+        ciphertext = encrypt(plaintext, key);
             ciphertext_1 = encrypt_star(plaintext, key,4,2);
             ciphertext_2 = encrypt_star(plaintext, key,3,7);
             ciphertext_3 = encrypt_star(plaintext, key,9,8);
@@ -497,8 +505,15 @@ public class mitm_dfa extends PiccoloCipher{
         for (int i = 0; i < a.size(); i++) {
             int[] cpm_res = a.get(i);
             if(cpm_res[0] == key[0] && cpm_res[1] == key[1] && cpm_res[2] == key[3] && cpm_res[3] == key[4]) {
-                System.out.println("Success!");
+                System.out.println("密钥恢复成功!");
+                long endTime=System.currentTimeMillis(); //获取结束时间
+                System.out.println("程序运行时间： "+(endTime-startTime)+"ms");
 
+//                for (int j = 0; j < 256*256; j++) {
+//                    ciphertext = encrypt(plaintext, key);
+//                }
+//                long endTime2=System.currentTimeMillis();
+//                System.out.println("程序运行时间： "+(endTime2-endTime)+"ms");
                 return;
             }
         }
